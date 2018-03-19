@@ -4,13 +4,13 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    int problemID = 1;
-    Solution_0_List* solution0 = new Solution_0_List();
+    int problemID = 0;
+    Solution_0_List<int >* solution0 = new Solution_0_List<int>();
     Solution_1_Tree<int>* solution1 = new Solution_1_Tree<int>();
     switch(problemID) {
         case 0: {
             cout << "Solving problem " << problemID << endl;
-            ListNode *list = solution0->construct(1);
+            ListNode<int> *list = solution0->construct(2);
             solution0->printList(list);
             list = solution0->insert(list, 100, 1);
             solution0->printList(list);
