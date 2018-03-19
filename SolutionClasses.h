@@ -9,21 +9,23 @@
 #include <set>
 using namespace std;
 
-typedef struct ListNode{
-    int val;
-    ListNode* next;
-}ListNode;
+template <typename T>
+struct ListNode{
+    T val;
+    ListNode<T>* next;
+};
 
+template <typename T>
 class Solution_0_List {
 public:
     Solution_0_List(){};
     ~Solution_0_List(){};
 
-    ListNode* construct(int len);
-    ListNode* insert(ListNode* head, int num, int index);
-    ListNode* remove(ListNode* head, int index);
-    void printList(ListNode* head);
-    int getListLen(ListNode* head);
+    ListNode<T>* construct(int len);
+    ListNode<T>* insert(ListNode<T>* head, T val, int index);
+    ListNode<T>* remove(ListNode<T>* head, int index);
+    void printList(ListNode<T>* head);
+    int getListLen(ListNode<T>* head);
 };
 
 template <typename T>
@@ -59,14 +61,15 @@ public:
 };
 
 // Solution_0
-ListNode* Solution_0_List::construct(int len) {
-    ListNode *head = new ListNode;
-    ListNode *ptr = head;
+template <typename T>
+ListNode<T>* Solution_0_List<T>::construct(int len) {
+    ListNode<T> *head = new ListNode<T>;
+    ListNode<T> *ptr = head;
     ptr->val = 0;
     ptr->next = NULL;
 
     for (int i = 1; i < len; ++i) {
-        ListNode* node = new ListNode;
+        ListNode<int>* node = new ListNode<T>;
         ptr->next = node;
         ptr = ptr->next;
 
@@ -76,18 +79,19 @@ ListNode* Solution_0_List::construct(int len) {
     return head;
 }
 // insert num after node index
-ListNode* Solution_0_List::insert(ListNode* head, int num, int index) {
-    ListNode* ptr = head;
+template <typename T>
+ListNode<T>* Solution_0_List<T>::insert(ListNode<T>* head, T val, int index) {
+    ListNode<T>* ptr = head;
     int idx = 0;
     while(idx < index && ptr != NULL) {
         idx++;
         ptr = ptr->next;
     }
     if(idx == index && ptr != NULL) {
-        ListNode* newNode = new ListNode;
+        ListNode<T>* newNode = new ListNode<T>;
         newNode->next = ptr->next;
         ptr->next = newNode;
-        newNode->val = num;
+        newNode->val = val;
         cout << "Insertion successful!" << endl;
     } else {
         cout << "Out of index" << endl;
@@ -95,8 +99,9 @@ ListNode* Solution_0_List::insert(ListNode* head, int num, int index) {
     return head;
 }
 
-ListNode* Solution_0_List::remove(ListNode* head, int index) {
-    ListNode* ptr = head;
+template <typename T>
+ListNode<T>* Solution_0_List<T>::remove(ListNode<T>* head, int index) {
+    ListNode<T>* ptr = head;
     int idx = 0;
     if(index == 0) { // remove head node
         head = head->next;
@@ -108,7 +113,7 @@ ListNode* Solution_0_List::remove(ListNode* head, int index) {
             ptr = ptr->next;
         }
         if (idx == index - 1 && ptr->next) {
-            ListNode* tempPtr = ptr->next;
+            ListNode<T>* tempPtr = ptr->next;
             ptr->next = ptr->next->next;
             delete tempPtr;
         } else {
@@ -118,11 +123,12 @@ ListNode* Solution_0_List::remove(ListNode* head, int index) {
     return head;
 }
 
-void Solution_0_List::printList(ListNode *head) {
+template <typename T>
+void Solution_0_List<T>::printList(ListNode<T> *head) {
     if (head == NULL) {
         cout << "Empty list" << endl;
     } else {
-        ListNode *ptr = head;
+        ListNode<T> *ptr = head;
         while (ptr) {
             cout << ptr->val << " ";
             ptr = ptr->next;
@@ -131,8 +137,9 @@ void Solution_0_List::printList(ListNode *head) {
     cout << endl;
 }
 
-int Solution_0_List::getListLen(ListNode *head) {
-    ListNode* ptr = head;
+template <typename T>
+int Solution_0_List<T>::getListLen(ListNode<T> *head) {
+    ListNode<T>* ptr = head;
     int len = 0;
     while(ptr) {
         len++;
