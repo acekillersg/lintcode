@@ -67,11 +67,13 @@ public:
     TreeNode<T>* findMin(TreeNode<T>* root);
     int countNumOfNodes(TreeNode<T>* root);
     int heightOfTree(TreeNode<T>* root);
-
-    TreeNode<T>* transformToList(TreeNode<T>* root);
-
-private:
-    TreeNode<T>* transformToListImpl(TreeNode<T>* root, TreeNode<T>*& pHead, TreeNode<T>*& pTail);
+    void transformToList(TreeNode<T>* root, TreeNode<T>*& pHead, TreeNode<T>*& pTail);
+    int countNumOfNodesAtK(TreeNode<T>* root, int k);
+    int countNumOfNodesAtK_Recursive(TreeNode<T>* root, int k);
+    int countNumOfNodesAtLeaves(TreeNode<T>* root);
+    bool compareTrees(TreeNode<T>* root1, TreeNode<T>* root2);
+    bool isAVLTree(TreeNode<T>* root);
+    void flipTree(TreeNode<T>* root);
 };
 
 // Solution_0
@@ -352,31 +354,133 @@ void Solution_1_Tree<T>::layerOrder(TreeNode<T> *root) {
 }
 
 template <typename T>
-TreeNode<T>* Solution_1_Tree<T>::transformToListImpl(TreeNode<T> *root, TreeNode<T> *&pHead, TreeNode<T> *&pTail) {
-    if (root == nullptr) {
+void Solution_1_Tree<T>::transformToList(TreeNode<T> *root, TreeNode<T>*& pHead, TreeNode<T>*& pTail) {
+    if(this->root == nullptr) {
         pHead = nullptr;
         pTail = nullptr;
     }
-    else if (root->left == nullptr && root->right != nullptr) {
-        pHead = root;
-        transformToListImpl(root->right, pHead, pTail);
-    }
-    else if (root->left != nullptr && root->right == nullptr) {
-        pHead = root->left;
-        pTail = root;
-    }
     else {
-        transformToListImpl(root->left, pHead, root);
-        transformToListImpl(root->right, root->right, pTail);
+        TreeNode<T>* pLeftTreeHead, *pLeftTreeTail, *pRightTreeHead, *pRightTreeTail = nullptr;
+        if (root == nullptr) {
+            pHead = nullptr;
+            pTail = nullptr;
+        }
+        else {
+            if (root->left == nullptr)
+                pHead = root;
+            else {
+                transformToList(root->left, pLeftTreeHead, pLeftTreeTail);
+                pHead = pLeftTreeHead;
+                root->left = pLeftTreeTail;
+                pLeftTreeTail->right = root;
+            }
+            if (root->right == nullptr)
+                pTail = root;
+            else {
+                transformToList(root->right, pRightTreeHead, pRightTreeTail);
+                pTail = pRightTreeTail;
+                root->right = pRightTreeHead;
+                pRightTreeHead->left = root;
+            }
+        }
     }
 }
 
 template <typename T>
-TreeNode<T>* Solution_1_Tree<T>::transformToList(TreeNode<T> *root) {
-    if(this->root == nullptr) return nullptr;
+struct TreeNodeQueue {
+    TreeNode<T>* treeNode;
+    int layer;
+    TreeNodeQueue(TreeNode<T>* treeNode, int layer) {
+        this->treeNode = treeNode;
+        this->layer = layer;
+    }
+};
+
+template <typename T>
+int Solution_1_Tree<T>::countNumOfNodesAtK(TreeNode<T> *root, int k) {
+    if (heightOfTree(this->root) < k || k < 1) {
+        cout << "Invalid k value!" << endl;
+        return 0;
+    }
     else {
-        TreeNode<T> *pHead, *pTail = nullptr;
-        return transformToListImpl(this->root, pHead, pTail);
+        queue<TreeNodeQueue<T>*> treeNodeQueue;
+        TreeNode<T>* ptr = root;
+        treeNodeQueue.push(new TreeNodeQueue<T>(ptr, 1));
+        TreeNodeQueue<T>* frontNode = treeNodeQueue.front();
+        while (frontNode->layer < k) {
+            if (frontNode->treeNode->left != nullptr)
+                treeNodeQueue.push(new TreeNodeQueue<T>(frontNode->treeNode->left, frontNode->layer + 1));
+            if (frontNode->treeNode->right != nullptr)
+                treeNodeQueue.push(new TreeNodeQueue<T>(frontNode->treeNode->right, frontNode->layer + 1));
+            treeNodeQueue.pop();
+            frontNode = treeNodeQueue.front();
+        }
+        return treeNodeQueue.size();
+    }
+}
+
+template <typename T>
+int Solution_1_Tree<T>::countNumOfNodesAtK_Recursive(TreeNode<T> *root, int k) {
+    if (heightOfTree(this->root) < k || k < 1) {
+        cout << "Invalid k value!" << endl;
+        return 0;
+    }
+    else {
+        if (root == nullptr || k < 1) return 0;
+        if (k == 1) return 1;
+        else return countNumOfNodesAtK_Recursive(root->left, k - 1) + countNumOfNodesAtK_Recursive(root->right, k - 1);
+    }
+}
+
+template <typename T>
+int Solution_1_Tree<T>::countNumOfNodesAtLeaves(TreeNode<T> *root) {
+    if (this->root == nullptr) {
+        cout << "Empty tree!" << endl;
+        return 0;
+    }
+    else {
+        if (root == nullptr) return 0;
+        if (root->left == nullptr && root->right == nullptr) return 1;
+        else
+            return countNumOfNodesAtLeaves(root->left) + countNumOfNodesAtLeaves(root->right);
+    }
+}
+
+template <typename T>
+bool Solution_1_Tree<T>::compareTrees(TreeNode<T> *root1, TreeNode<T> *root2) {
+    if (root1 == nullptr && root2 == nullptr) return true;
+    else if (root1 == nullptr && root2 != nullptr) return false;
+    else if (root1 != nullptr && root2 == nullptr) return false;
+    else
+        return compareTrees(root1->left, root2->left) && compareTrees(root1->right, root2->right);
+
+}
+
+template <typename T>
+bool Solution_1_Tree<T>::isAVLTree(TreeNode<T> *root) {
+    if (this->root == nullptr) return true;
+    else {
+        if (root == nullptr) return true;
+        else if ((isAVLTree(root->left) && isAVLTree(root->right)) == false) {
+            return false;
+        }
+        else {
+            int leftTreeHeight = heightOfTree(root->left);
+            int rightTreeHeight = heightOfTree(root->right);
+            if (abs(leftTreeHeight - rightTreeHeight) > 1) return false;
+            else return true;
+        }
+    }
+}
+
+template <typename T>
+void Solution_1_Tree<T>::flipTree(TreeNode<T> *root) {
+    if (root != nullptr) {
+        TreeNode<T>* temp = root->left;
+        root->left = root->right;
+        root->right = temp;
+        flipTree(root->left);
+        flipTree(root->right);
     }
 }
 #endif //LINTCODE_SOLUTIONCLASSES_H
