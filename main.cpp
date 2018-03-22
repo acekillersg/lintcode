@@ -50,11 +50,18 @@ int main(int argc, char** argv) {
 
             Solution_1_Tree<int>* solution2 = new Solution_1_Tree<int>();
             cout << "Solving problem " << problemID << endl;
-            solution2->insert(3, solution2->root);
-            solution2->insert(6, solution2->root);
             solution2->insert(2, solution2->root);
+            solution2->insert(1, solution2->root);
+            solution2->insert(6, solution2->root);
+            solution2->insert(5, solution2->root);
+            solution2->insert(4, solution2->root);
+            solution2->insert(3, solution2->root);
             solution2->insert(7, solution2->root);
+            solution2->insert(8, solution2->root);
             solution2->insert(9, solution2->root);
+            solution2->insert(0, solution2->root);
+            solution2->insert(-1, solution2->root);
+//            solution2->insert(9, solution2->root);
 //            solution2->insert(2, solution2->root);
 //            solution2->insert(13, solution2->root);
 //            solution2->insert(16, solution2->root);
@@ -119,8 +126,8 @@ int main(int argc, char** argv) {
             cout << endl << "is balanced tree: ";
             cout << (solution1->isAVLTree(solution2->root) ? "Yes" : "No") << " ";
 
-            cout << endl << "flip a tree";
-            solution2->flipTree(solution2->root);
+//            cout << endl << "flip a tree";
+//            solution2->flipTree(solution2->root);
 
             cout << endl << "visit in in-order: ";
             solution2->inOrder(solution2->root);
@@ -130,6 +137,10 @@ int main(int argc, char** argv) {
 
             cout << endl << "visit in post-order: ";
             solution2->postOrder(solution2->root);
+
+            cout << endl << "Longest distance in tree: ";
+            int leftSubTree, rightSubTree = 0;
+            cout << solution2->maxDistanceInTree(solution2->root, leftSubTree, rightSubTree);
 
 
 //            cout << endl << "transform to list: ";

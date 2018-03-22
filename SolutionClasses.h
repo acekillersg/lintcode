@@ -74,6 +74,7 @@ public:
     bool compareTrees(TreeNode<T>* root1, TreeNode<T>* root2);
     bool isAVLTree(TreeNode<T>* root);
     void flipTree(TreeNode<T>* root);
+    int maxDistanceInTree(TreeNode<T> *root, int &maxLeftToRoot, int &maxRightToRoot);
 };
 
 // Solution_0
@@ -481,6 +482,52 @@ void Solution_1_Tree<T>::flipTree(TreeNode<T> *root) {
         root->right = temp;
         flipTree(root->left);
         flipTree(root->right);
+    }
+}
+
+/**
+ *
+ * @tparam T
+ * @param root current root node of tree (subtree)
+ * @param maxLeftToRoot longest distance to current root from current root's left subtree
+ * @param maxRightToRoot longest distance to current root from current root's right subtree
+ * @return the value of longest distance in the tree
+ */
+template <typename T>
+int Solution_1_Tree<T>::maxDistanceInTree(TreeNode<T> *root, int& maxLeftToRoot, int& maxRightToRoot) {
+    if (this->root == nullptr) {
+        return 0;
+    }
+    else {
+        // ll: max distance to left child node from left child node's left sub-tree
+        // lr: max distance to left child node from left child node's right sub-tree
+        // rl: max distance to right child node from right child node's left sub-tree
+        // rr: max distance to right child node from right child node's right sub-tree
+        int ll = 0, lr = 0, rl = 0, rr = 0;
+        int maxLeftDist, maxRightDist;
+        if (root == nullptr) {
+            maxLeftToRoot = 0;
+            maxRightToRoot = 0;
+            maxLeftDist = 0;
+            maxRightDist = 0;
+        }
+        else {
+            if (root->left != nullptr) {
+                maxLeftDist = maxDistanceInTree(root->left, ll, lr);
+                maxLeftToRoot = max(ll, lr) + 1;
+            } else {
+                maxLeftDist = 0;
+                maxLeftToRoot = 0;
+            }
+            if (root->right != nullptr) {
+                maxRightDist = maxDistanceInTree(root->right, rl, rr);
+                maxRightToRoot = max(rl, rr) + 1;
+            } else {
+                maxRightDist = 0;
+                maxRightToRoot = 0;
+            }
+        }
+        return max((maxLeftDist, maxRightDist), maxLeftToRoot + maxRightToRoot);
     }
 }
 #endif //LINTCODE_SOLUTIONCLASSES_H
