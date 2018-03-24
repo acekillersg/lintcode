@@ -8,6 +8,7 @@
 #include <iostream>
 #include <set>
 #include <queue>
+#include <string>
 
 using namespace std;
 
@@ -15,6 +16,7 @@ template <typename T>
 struct ListNode{
     T val;
     ListNode<T>* next;
+    ListNode() : val(0), next(nullptr){}
 };
 
 template <typename T>
@@ -40,7 +42,7 @@ struct TreeNode {
     TreeNode<T> *left;
     TreeNode<T> *right;
 
-    TreeNode(T key){
+    TreeNode(T key) : left(nullptr), right(nullptr) {
         this->key = key;
     }
     ~TreeNode(){};
@@ -75,6 +77,13 @@ public:
     bool isAVLTree(TreeNode<T>* root);
     void flipTree(TreeNode<T>* root);
     int maxDistanceInTree(TreeNode<T> *root, int &maxLeftToRoot, int &maxRightToRoot);
+    void generate_interact(TreeNode<T>*& root);
+    void generate_pre_order(TreeNode<T>*& root);
+    void regenerate(TreeNode<T>*& root);
+
+private:
+    void generate_pre_order_impl(TreeNode<T>*& root, string str, int& idx);
+    void regenerate_impl(TreeNode<T>*& root, string in, string post);
 };
 
 // Solution_0
@@ -528,6 +537,86 @@ int Solution_1_Tree<T>::maxDistanceInTree(TreeNode<T> *root, int& maxLeftToRoot,
             }
         }
         return max((maxLeftDist, maxRightDist), maxLeftToRoot + maxRightToRoot);
+    }
+}
+
+template <typename T>
+void Solution_1_Tree<T>::generate_interact(TreeNode<T>*& root) {
+    T val = 0;
+    cout << "Please input value of root node: ";
+    if (val != -1) {
+        root = new TreeNode<T>(val);
+
+        cout << "Creating left sub tree!" << endl;
+        generate_interact(root->left);
+
+        cout << "Creating right sub tree!" << endl;
+        generate_interact(root->right);
+    }
+}
+
+template <typename T>
+void Solution_1_Tree<T>::generate_pre_order(TreeNode<T>*& root) {
+    string str;
+
+    cout << "Input the string of values in pre-order: ";
+    getline(cin, str);
+    int idx = 0;
+
+    generate_pre_order_impl(this->root, str, idx);
+}
+
+template <typename T>
+void Solution_1_Tree<T>::generate_pre_order_impl(TreeNode<T> *&root, string str, int& idx) {
+    if (idx < str.length()) {
+        if (str.at(idx) == '#') root = nullptr;
+        else {
+            root = new TreeNode<T>(str.at(idx));
+            generate_pre_order_impl(root->left, str, ++idx);
+            generate_pre_order_impl(root->right, str, ++idx);
+        }
+    }
+}
+
+template <typename T>
+void Solution_1_Tree<T>::regenerate(TreeNode<T>*& root) {
+    string in, post;
+    cout << "Input the string of values in in-order and post-order, respectively" << endl;
+    cout << "In-order: ";
+    getline(cin, in);
+    cout << "Post-order: ";
+    getline(cin, post);
+    if (in.empty() || post.empty() || in.length() != post.length())
+        cout << __FILE__ << "(" << __LINE__ << "): " << "incorrect input!" << endl;
+    else
+        regenerate_impl(this->root, in, post);
+}
+
+template <typename T>
+void Solution_1_Tree<T>::regenerate_impl(TreeNode<T> *&root, string in, string post) {
+    if (!in.empty() && !post.empty()) {
+        char root_val = post.back();
+        int root_pos = in.find_first_of(root_val);
+        if (root_pos == string::npos) {
+            cout << __FILE__ << " (" << __LINE__ << "): " << "incorrect input!" << endl;
+        }
+        else if (root_pos == 1) {
+            root = new TreeNode<T>(root_val);
+            string in_left = "";
+            string in_right = "";
+            string post_left = "";
+            string post_right = "";
+        } else {
+            root = new TreeNode<T>(root_val);
+
+            string in_left = in.substr(0, root_pos);
+            string in_right = in.substr(root_pos + 1, in.length() - 1);
+            string post_left = post.substr(0, in_left.length());
+            string post_right = post.substr(in_left.length(), in_right.length());
+
+            regenerate_impl(root->left, in_left, post_left);
+            regenerate_impl(root->right, in_right, post_right);
+        }
     }
 }
 #endif //LINTCODE_SOLUTIONCLASSES_H
