@@ -599,23 +599,19 @@ void Solution_1_Tree<T>::regenerate_impl(TreeNode<T> *&root, string in, string p
         int root_pos = in.find_first_of(root_val);
         if (root_pos == string::npos) {
             cout << __FILE__ << " (" << __LINE__ << "): " << "incorrect input!" << endl;
-        }
-        else if (root_pos == 1) {
-            root = new TreeNode<T>(root_val);
-            string in_left = "";
-            string in_right = "";
-            string post_left = "";
-            string post_right = "";
         } else {
+
             root = new TreeNode<T>(root_val);
 
-            string in_left = in.substr(0, root_pos);
-            string in_right = in.substr(root_pos + 1, in.length() - 1);
-            string post_left = post.substr(0, in_left.length());
-            string post_right = post.substr(in_left.length(), in_right.length());
+            if (in.length() > 1) {
+                string in_left = in.substr(0, root_pos);
+                string in_right = in.substr(root_pos + 1, in.length() - 1);
+                string post_left = post.substr(0, in_left.length());
+                string post_right = post.substr(post_left.length(), in_right.length());
 
-            regenerate_impl(root->left, in_left, post_left);
-            regenerate_impl(root->right, in_right, post_right);
+                regenerate_impl(root->left, in_left, post_left);
+                regenerate_impl(root->right, in_right, post_right);
+            }
         }
     }
 }

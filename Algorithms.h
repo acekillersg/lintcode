@@ -25,3 +25,14 @@ int Adder::add(int a, int b) {
         return add(carry, reserve);
 }
 #endif //LINTCODE_ALGORITHMS_H
+
+
+template <typename T>
+class Sorter {
+public:
+    void simple_sort(T array[], bool ascending = true);
+    void quick_sort(T array[], bool ascending = true);
+    void bubble_sort(T array[], bool ascending = true);
+    void select_sort(T array[], bool ascending = true);
+    void merge_sort(T array[], bool ascending = true);
+};
