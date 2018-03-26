@@ -6,7 +6,7 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    int problemID = 1;
+    int problemID = 3;
     switch(problemID) {
         case 0: {
             Solution_0_List<int >* solution0 = new Solution_0_List<int>();
@@ -191,8 +191,22 @@ int main(int argc, char** argv) {
         }
         case 2:
         {
-            Adder* adder = new Adder;
+            Adder* adder = new Adder();
             cout << "adding result: " << bitset<8>(0 - adder->add(12, 14));
+            break;
+        }
+        case 3:
+        {
+            Sorter<int>* sorter = new Sorter<int>;
+            cout << "sorting results: " << endl;
+            int array[] = {4, 5, 2, 3, 9, 0};
+            size_t size = sizeof(array) / sizeof(array[0]);
+            int count = sorter->merge_sorter(array, 0, size - 1, true);
+            for (int i = 0; i < size; ++i) {
+                cout << array[i] << " ";
+            }
+            cout << endl << "The position of target element: " << sorter->binary_search(array, size, 4);
+            cout << endl << "Number of reserve pairs: " << count;
             break;
         }
         default: {
