@@ -2,11 +2,13 @@
 #include <bitset>
 #include "SolutionClasses.h"
 #include "Algorithms.h"
+#include "STL_Solution.h"
+#include <algorithm>
 
 using namespace std;
 
 int main(int argc, char** argv) {
-    int problemID = 3;
+    int problemID = 4;
     switch(problemID) {
         case 0: {
             Solution_0_List<int >* solution0 = new Solution_0_List<int>();
@@ -207,6 +209,47 @@ int main(int argc, char** argv) {
             }
             cout << endl << "The position of target element: " << sorter->binary_search(array, size, 4);
             cout << endl << "Number of reserve pairs: " << count;
+            break;
+        }
+        case 4:
+        {
+//            STL_Solution<int> *solution4 = new STL_Solution<int>();
+//            solution4->vec.push_back(4);
+//            solution4->vec.push_back(5);
+//            for (vector<int>::iterator itr = solution4->vec.begin(); itr != solution4->vec.end(); itr++) {
+//                cout << *itr << " " << endl;
+//            }
+//
+//            priority_queue<Node, vector<Node>, Cmp> pq;
+//            pq.push(Node(14, 14));
+//            pq.push(Node(13, 13));
+//            pq.push(Node(15, 15));
+//            while (!pq.empty()) {
+//                auto p = pq.top();
+//                cout << p.x << " " << p.y << endl;
+//                pq.pop();
+//            }
+//
+//            vector<int> num = {9, 6, 2, 4, 7, 1, 8, 14, 3, 5};
+//            make_heap(num.begin(), num.end(), less<int>());
+//            cout << "Maximum: " << *num.begin() << endl;
+
+//
+//            MaxHeap<int>* maxHeap = new MaxHeap<int>();
+//            maxHeap->insert(10);
+//            maxHeap->insert(8);
+//            maxHeap->insert(20);
+//            maxHeap->insert(30);
+//            maxHeap->insert(15);
+//            maxHeap->insert(7);
+//            maxHeap->display();
+//
+//            cout << endl;
+//            maxHeap->del(20);
+//            maxHeap->del(7);
+//            maxHeap->display();
+
+            maze_solution();
             break;
         }
         default: {
