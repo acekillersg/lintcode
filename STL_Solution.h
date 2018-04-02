@@ -160,12 +160,14 @@ public:
  * @param n
  */
 void maze_solution() {
-    const int N = 4;
+    const int N = 5;
     int maze[N][N] = {
-            {0, 1, 0, 0},
-            {0, 0, 0, 0},
-            {0, 1, 1, 1},
-            {0, 0, 0, 0}};
+            {0, 0, 0, 0, 1},
+            {0, 1, 0, 0, 0},
+            {0, 1, 1, 1, 0},
+            {0, 0, 0, 1, 1},
+            {0, 1, 0, 0, 0},
+    };
 
     stack<pair<int, int>> reverse_path;
     bool visited[N][N] = {
