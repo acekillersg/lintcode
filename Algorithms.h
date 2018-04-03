@@ -24,8 +24,6 @@ int Adder::add(int a, int b) {
     else
         return add(carry, reserve);
 }
-#endif //LINTCODE_ALGORITHMS_H
-
 
 template <typename T>
 class Sorter {
@@ -192,3 +190,65 @@ int Sorter<T>::binary_search_impl(T *array, int left, int right, T element) {
     else
         return binary_search_impl(array, mid + 1, right, element);
 }
+
+void getNext(string pattern, int* next) {
+//    for (int i = 0; i < pattern.length(); ++i) {
+//        int max_len = 0;
+//        if (i == 0) next[i] = -1;
+//        else if (i == 1) next[i] = 0;
+//        else {
+//            int pre_post_str_len = i;
+//            for (int current_len = 1; current_len <= pre_post_str_len - 1; ++current_len) {
+//                int head = 0;
+//                int tail = pre_post_str_len - current_len;
+//
+//                bool matched = true;
+//                for (int k = 0; k < current_len; ++k) {
+//                    if (pattern[head + k] != pattern[tail + k]) {
+//                        matched = false;
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//    }
+}
+
+int KMP(string sentence, string pattern) {
+
+//    int* next = new int[pattern.length()]();
+//    getNext(pattern, next);
+//
+//    for (int i = 0; i < pattern.length(); ++i) {
+//        cout << next[i] << " ";
+//    }
+//    delete[] next;
+    return 0;
+}
+
+void maxSumInArray(int* number, int count) {
+    int max = 0;
+    int currentMax = 0;
+
+    int startIdx = 0, endIdx = 0;
+    for (int i = 0; i < count; ++i) {
+        currentMax += number[i];
+
+        if (currentMax > max) {
+            max = currentMax;
+            endIdx = i;
+        }
+        if (currentMax < 0) {
+            currentMax = 0;
+            startIdx = i + 1;
+        }
+    }
+
+    cout << "Max sum of sub-sequence (" << startIdx << "," << endIdx << "): " << max << endl;
+}
+
+void eight_queen(int n) {
+
+}
+
+#endif //LINTCODE_ALGORITHMS_H

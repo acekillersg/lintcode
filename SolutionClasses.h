@@ -544,6 +544,7 @@ template <typename T>
 void Solution_1_Tree<T>::generate_interact(TreeNode<T>*& root) {
     T val = 0;
     cout << "Please input value of root node: ";
+    cin >> val;
     if (val != -1) {
         root = new TreeNode<T>(val);
 
@@ -558,11 +559,10 @@ void Solution_1_Tree<T>::generate_interact(TreeNode<T>*& root) {
 template <typename T>
 void Solution_1_Tree<T>::generate_pre_order(TreeNode<T>*& root) {
     string str;
-
     cout << "Input the string of values in pre-order: ";
+    getchar();
     getline(cin, str);
     int idx = 0;
-
     generate_pre_order_impl(this->root, str, idx);
 }
 
@@ -581,7 +581,7 @@ void Solution_1_Tree<T>::generate_pre_order_impl(TreeNode<T> *&root, string str,
 template <typename T>
 void Solution_1_Tree<T>::regenerate(TreeNode<T>*& root) {
     string in, post;
-    cout << "Input the string of values in in-order and post-order, respectively" << endl;
+    cout << endl << "Input the string of values in in-order and post-order, respectively" << endl;
     cout << "In-order: ";
     getline(cin, in);
     cout << "Post-order: ";

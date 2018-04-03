@@ -9,10 +9,10 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    int problemID = 5;
-    switch(problemID) {
+    int problemID = 1;
+    switch (problemID) {
         case 0: {
-            Solution_0_List<int >* solution0 = new Solution_0_List<int>();
+            Solution_0_List<int> *solution0 = new Solution_0_List<int>();
             cout << "Solving problem " << problemID << endl;
 
             cout << "construct a new list: " << endl;
@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
             solution0->printList(list);
 
             cout << "remove a node from the list: " << endl;
-            list = solution0->remove(list,0);
+            list = solution0->remove(list, 0);
             solution0->printList(list);
 
             cout << "reverse the list: " << endl;
@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
         case 1: {
             cout << "Solving problem " << problemID << endl;
 
-            Solution_1_Tree<int>* solution1 = new Solution_1_Tree<int>();
+            Solution_1_Tree<int> *solution1 = new Solution_1_Tree<int>();
             solution1->insert(3, solution1->root);
             solution1->insert(6, solution1->root);
             solution1->insert(4, solution1->root);
@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
             solution1->insert(19, solution1->root);
             solution1->insert(12, solution1->root);
 
-            Solution_1_Tree<int>* solution2 = new Solution_1_Tree<int>();
+            Solution_1_Tree<int> *solution2 = new Solution_1_Tree<int>();
             solution2->insert(2, solution2->root);
             solution2->insert(1, solution2->root);
             solution2->insert(6, solution2->root);
@@ -78,7 +78,7 @@ int main(int argc, char** argv) {
             cout << endl << "visit in in-order:";
             solution1->inOrder(solution1->root);
 
-            cout << endl <<  "visit in post-order:";
+            cout << endl << "visit in post-order:";
             solution1->postOrder(solution1->root);
 
             cout << endl << "find certain key: ";
@@ -93,10 +93,10 @@ int main(int argc, char** argv) {
             cout << endl << "visit in pre-order:";
             solution1->preOrder(solution1->root);
 
-            cout << endl <<  "visit in post-order:";
+            cout << endl << "visit in post-order:";
             solution1->postOrder(solution1->root);
 
-            cout << endl <<  "visit in layer-order:";
+            cout << endl << "visit in layer-order:";
             solution1->layerOrder(solution1->root);
 
             cout << endl << "delete key: 19";
@@ -144,7 +144,7 @@ int main(int argc, char** argv) {
             int leftSubTree, rightSubTree = 0;
             cout << solution2->maxDistanceInTree(solution2->root, leftSubTree, rightSubTree);
 
-            Solution_1_Tree<int>* solution3 = new Solution_1_Tree<int>();
+            Solution_1_Tree<int> *solution3 = new Solution_1_Tree<int>();
             cout << endl << "Creating new binary tree!" << endl;
             solution3->generate_interact(solution3->root);
 
@@ -165,8 +165,9 @@ int main(int argc, char** argv) {
                 cout << ptr->key << " ";
                 ptr = ptr->right;
             }
+            cout << endl;
 
-            Solution_1_Tree<char>* solution4 = new Solution_1_Tree<char>();
+            Solution_1_Tree<char> *solution4 = new Solution_1_Tree<char>();
             solution4->generate_pre_order(solution4->root);
 
             cout << endl << "visit in in-order: ";
@@ -178,7 +179,7 @@ int main(int argc, char** argv) {
             cout << endl << "visit in pre-order: ";
             solution4->preOrder(solution4->root);
 
-            Solution_1_Tree<char>* solution5 = new Solution_1_Tree<char>();
+            Solution_1_Tree<char> *solution5 = new Solution_1_Tree<char>();
             solution5->regenerate(solution5->root);
 
             cout << endl << "visit in in-order: ";
@@ -189,18 +190,17 @@ int main(int argc, char** argv) {
 
             cout << endl << "visit in pre-order: ";
             solution5->preOrder(solution5->root);
+            cout << endl;
 
             break;
         }
-        case 2:
-        {
-            Adder* adder = new Adder();
+        case 2: {
+            Adder *adder = new Adder();
             cout << "adding result: " << bitset<8>(0 - adder->add(12, 14));
             break;
         }
-        case 3:
-        {
-            Sorter<int>* sorter = new Sorter<int>;
+        case 3: {
+            Sorter<int> *sorter = new Sorter<int>;
             cout << "sorting results: " << endl;
             int array[] = {4, 5, 2, 3, 9, 0};
             size_t size = sizeof(array) / sizeof(array[0]);
@@ -212,8 +212,7 @@ int main(int argc, char** argv) {
             cout << endl << "Number of reserve pairs: " << count;
             break;
         }
-        case 4:
-        {
+        case 4: {
             STL_Solution<int> *solution4 = new STL_Solution<int>();
             solution4->vec.push_back(4);
             solution4->vec.push_back(5);
@@ -236,7 +235,7 @@ int main(int argc, char** argv) {
             cout << "Maximum: " << *num.begin() << endl;
 
 
-            MaxHeap<int>* maxHeap = new MaxHeap<int>();
+            MaxHeap<int> *maxHeap = new MaxHeap<int>();
             maxHeap->insert(10);
             maxHeap->insert(8);
             maxHeap->insert(20);
@@ -254,22 +253,35 @@ int main(int argc, char** argv) {
             break;
         }
         case 5: {
-            AdjList_Graph_Solution* algs = new AdjList_Graph_Solution();
-            algs->initGraph(7);
-            algs->addEdge(0, 2);
-            algs->addEdge(0, 3);
+            AdjList_Graph_Solution *algs = new AdjList_Graph_Solution();
+            algs->initGraph(9);
+            algs->addEdge(0, 1);
             algs->addEdge(0, 5);
+            algs->addEdge(1, 0);
             algs->addEdge(1, 2);
-            algs->addEdge(2, 0);
+            algs->addEdge(1, 6);
+            algs->addEdge(1, 8);
             algs->addEdge(2, 1);
             algs->addEdge(2, 3);
-            algs->addEdge(3, 0);
+            algs->addEdge(2, 8);
             algs->addEdge(3, 2);
-            algs->addEdge(4, 6);
+            algs->addEdge(3, 4);
+            algs->addEdge(3, 6);
+            algs->addEdge(3, 7);
+            algs->addEdge(3, 8);
+            algs->addEdge(4, 3);
+            algs->addEdge(4, 5);
+            algs->addEdge(4, 7);
             algs->addEdge(5, 0);
+            algs->addEdge(5, 4);
             algs->addEdge(5, 6);
-            algs->addEdge(6, 4);
+            algs->addEdge(6, 1);
+            algs->addEdge(6, 3);
             algs->addEdge(6, 5);
+            algs->addEdge(6, 7);
+            algs->addEdge(7, 3);
+            algs->addEdge(7, 4);
+            algs->addEdge(7, 6);
             algs->printGraph();
 
             cout << "DFS: " << endl;
@@ -282,22 +294,35 @@ int main(int argc, char** argv) {
             algs->destroy();
             algs->printGraph();
 
-            AdjMat_Graph_Solution* amgs = new AdjMat_Graph_Solution();
-            amgs->initGraph(7);
-            amgs->addEdge(0, 2);
-            amgs->addEdge(0, 3);
+            AdjMat_Graph_Solution *amgs = new AdjMat_Graph_Solution();
+            amgs->initGraph(9);
+            amgs->addEdge(0, 1);
             amgs->addEdge(0, 5);
+            amgs->addEdge(1, 0);
             amgs->addEdge(1, 2);
-            amgs->addEdge(2, 0);
+            amgs->addEdge(1, 6);
+            amgs->addEdge(1, 8);
             amgs->addEdge(2, 1);
             amgs->addEdge(2, 3);
-            amgs->addEdge(3, 0);
+            amgs->addEdge(2, 8);
             amgs->addEdge(3, 2);
-            amgs->addEdge(4, 6);
+            amgs->addEdge(3, 4);
+            amgs->addEdge(3, 6);
+            amgs->addEdge(3, 7);
+            amgs->addEdge(3, 8);
+            amgs->addEdge(4, 3);
+            amgs->addEdge(4, 5);
+            amgs->addEdge(4, 7);
             amgs->addEdge(5, 0);
+            amgs->addEdge(5, 4);
             amgs->addEdge(5, 6);
-            amgs->addEdge(6, 4);
+            amgs->addEdge(6, 1);
+            amgs->addEdge(6, 3);
             amgs->addEdge(6, 5);
+            amgs->addEdge(6, 7);
+            amgs->addEdge(7, 3);
+            amgs->addEdge(7, 4);
+            amgs->addEdge(7, 6);
             amgs->printGraph();
 
             cout << "DFS: " << endl;
@@ -310,6 +335,19 @@ int main(int argc, char** argv) {
             amgs->destroy();
             amgs->printGraph();
 
+            break;
+        }
+        case 6: {
+//            string sentence = "ABCABCDABDCABCDABDAB";
+//            string pattern = "ABCDABD";
+//            cout << "Position: " << KMP(sentence, pattern);
+
+            int number1[] = {-2, 11, -4, 13, -5, -2};
+            int number2[] = {-6, 2, 4, -7, 5, 3, 2, -1, 6, -9, 10, -2};
+            int number3[] = {-2, 11, 8, -4, -1, 16, 5, 0};
+            maxSumInArray(number1, sizeof(number1) / sizeof(int));
+            maxSumInArray(number2, sizeof(number2) / sizeof(int));
+            maxSumInArray(number3, sizeof(number3) / sizeof(int));
             break;
         }
         default: {
