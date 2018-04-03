@@ -9,7 +9,7 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    int problemID = 1;
+    int problemID = 6;
     switch (problemID) {
         case 0: {
             Solution_0_List<int> *solution0 = new Solution_0_List<int>();
@@ -342,12 +342,16 @@ int main(int argc, char** argv) {
 //            string pattern = "ABCDABD";
 //            cout << "Position: " << KMP(sentence, pattern);
 
-            int number1[] = {-2, 11, -4, 13, -5, -2};
+            int number1[] = {1, -2, 3, 10, -4, 7, 2, -5};
             int number2[] = {-6, 2, 4, -7, 5, 3, 2, -1, 6, -9, 10, -2};
             int number3[] = {-2, 11, 8, -4, -1, 16, 5, 0};
             maxSumInArray(number1, sizeof(number1) / sizeof(int));
             maxSumInArray(number2, sizeof(number2) / sizeof(int));
             maxSumInArray(number3, sizeof(number3) / sizeof(int));
+
+//            eight_queen(8);
+
+//            hanoi(20);
             break;
         }
         default: {

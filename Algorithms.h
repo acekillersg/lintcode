@@ -243,12 +243,105 @@ void maxSumInArray(int* number, int count) {
             startIdx = i + 1;
         }
     }
-
     cout << "Max sum of sub-sequence (" << startIdx << "," << endIdx << "): " << max << endl;
+}
+
+/**
+ * Check whether current placing is legal.
+ * @param col Current column to be checked.
+ * @param row At current column, which row to be placed at.
+ * @param board The checkerboard: index represents column, value represents at which row of this column the queen is placed.
+ * @param n Number of queens.
+ * @return Can or Can not place.
+ */
+bool check_place(int col, int board[], int n) {
+    bool can_flag = true;
+
+    // Check the same row. Note: don't need to check the same column
+    for (int i = 0; i < col; ++i) {
+        if (board[i] == board[col]) can_flag = false;
+    }
+    int c = col - 1;
+    int r = board[col] - 1;
+    while (c >= 0 && r >= 0) {
+        if (board[c] == r) {
+            can_flag = false;
+            break;
+        }
+        else {
+            c--;
+            r--;
+        }
+    }
+
+    int cc = col - 1;
+    int rr = board[col] + 1;
+    while (cc >= 0 && rr <= n - 1) {
+        if (board[cc] == rr) {
+            can_flag = false;
+            break;
+        }
+        else {
+            cc--;
+            rr++;
+        }
+    }
+    return can_flag;
 }
 
 void eight_queen(int n) {
 
+    // Initialize the checkerboard
+    int* board = new int[n]();
+    for (int i = 0; i < n; ++i) {
+        board[i] = -1;
+    }
+
+    int j = 0;
+    for (; j < n; ) {
+        while (board[j] < n) {
+            board[j]++;
+            if (board[j] == n) {
+                if (j != 0) {
+                    board[j] = -1;
+                    j--;
+                } else break;
+            } else if (check_place(j, board, n)) {
+                j++;
+                break;
+            }
+        }
+        if (j == 0) {
+            cout << "Cannot find!" << endl;
+            break;
+        }
+    }
+    if (j == n) {
+        cout << "j: " << j << endl;
+        for (int k = 0; k < n; ++k) {
+            for (int i = 0; i < n; ++i) {
+                if (board[i] == k) cout << "*";
+                else cout << "0";
+            }
+            cout << endl;
+        }
+    }
+    delete[] board;
+}
+
+// Move n disks from "from" to "to" via "via"
+void hanoi_impl(int n, int from, int via, int to) {
+    if (n == 1) cout << "Move disk " << n - 1 << " from " << from << " to " << to << endl;
+    else {
+        hanoi_impl(n - 1, from, to, via);
+        cout << "Move disk " << n - 1 << " from " << from << " to " << to << endl;
+        hanoi_impl(n - 1, via, from, to);
+    }
+}
+
+// n: the number of disks to move
+void hanoi(int n) {
+    hanoi_impl(n, 0, 1, 2);
 }
 
 #endif //LINTCODE_ALGORITHMS_H

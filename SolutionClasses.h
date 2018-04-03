@@ -560,7 +560,7 @@ template <typename T>
 void Solution_1_Tree<T>::generate_pre_order(TreeNode<T>*& root) {
     string str;
     cout << "Input the string of values in pre-order: ";
-    getchar();
+    cin.ignore();
     getline(cin, str);
     int idx = 0;
     generate_pre_order_impl(this->root, str, idx);
