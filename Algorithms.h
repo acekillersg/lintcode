@@ -5,6 +5,13 @@
 #ifndef LINTCODE_ALGORITHMS_H
 #define LINTCODE_ALGORITHMS_H
 
+#include <stack>
+
+#define ISLANDS_M 5
+#define ISLANDS_N 7
+
+using namespace std;
+
 class Adder {
 public:
     int add(int a, int b);
@@ -342,6 +349,141 @@ void hanoi_impl(int n, int from, int via, int to) {
 // n: the number of disks to move
 void hanoi(int n) {
     hanoi_impl(n, 0, 1, 2);
+}
+
+void parentheses_match(const string str) {
+    bool matched = true;
+    stack<char> s;
+    for (int i = 0; i < str.length(); ++i) {
+        if (str[i] == '(') s.push(str[i]);
+        if (str[i] == ')') {
+            if (!s.empty()) s.pop();
+            else {
+                matched = false;
+                break;
+            }
+        }
+    }
+    if (matched && s.empty()) cout << "Matched!" << endl;
+    else cout << "Unmatched!" << endl;
+}
+
+void parentheses_match_rec_impl(const string str, int idx, int& count, bool& flag) {
+    if (idx < str.length()) {
+        if (str[idx] == '(') count++;
+        if (str[idx] == ')') count--;
+        if (count < 0) {
+            flag = false;
+            return;
+        } else {
+            idx++;
+            parentheses_match_rec_impl(str, idx, count, flag);
+        }
+    }
+}
+
+void parentheses_match_rec(const string str) {
+    int count = 0;
+    int idx = 0;
+    bool flag = true;
+    parentheses_match_rec_impl(str, idx, count, flag);
+    if (count == 0 && flag) cout << "Matched!" << endl;
+    else cout << "Unmatched!" << endl;
+}
+
+typedef struct island_info {
+    int size;
+    int row;
+    int col;
+    string charSequence;
+    island_info() : size(0), row(0), col(0), charSequence("") {}
+}island_info;
+
+void island_search_dfs(const char (&islands)[ISLANDS_M][ISLANDS_N], bool (&visited)[ISLANDS_M][ISLANDS_N], int row, int col, island_info& info);
+
+void island_search() {
+
+    int island_count = 0;
+    vector<island_info> iiv;
+    set<string> island_set;
+
+    // original input of islands
+    const char islands[ISLANDS_M][ISLANDS_N] = {
+            {'.', '+', '+', '+', '+', '.', '.'},
+            {'.', '.', '.', '.', '.', '+', '.'},
+            {'+', '+', '+', '+', '.', '+', '.'},
+            {'.', '.', '.', '.', '.', '+', '.'},
+            {'.', '.', '+', '+', '.', '+', '.'},
+    };
+
+    // visited matrix records whether a point has been visited or not
+    bool visited[ISLANDS_M][ISLANDS_N];
+    for (int i = 0; i < ISLANDS_M; ++i) {
+        for (int j = 0; j < ISLANDS_N; ++j) {
+            visited[i][j] = false;
+        }
+    }
+
+    for (int i = 0; i < ISLANDS_M; ++i) {
+        for (int j = 0; j < ISLANDS_N; ++j) {
+            if (visited[i][j] == false) {
+                if (islands[i][j] == '+') {
+                    island_count++;
+                    island_info ii;
+                    island_search_dfs(islands, visited, i, j, ii);
+                    iiv.push_back(ii);
+                }
+            }
+        }
+    }
+
+    cout << "Number of islands: " << island_count << endl;
+    for (int k = 0; k < island_count; ++k) {
+        cout << "The " << k << "th island's size: " << iiv[k].size << " charSequence: " << iiv[k].charSequence << endl;
+        island_set.insert(iiv[k].charSequence);
+    }
+    cout <<  "The number of islands with different shapes: " << island_set.size() << endl;
+}
+
+void island_search_dfs(const char (&islands)[ISLANDS_M][ISLANDS_N], bool (&visited)[ISLANDS_M][ISLANDS_N], int startingRow, int startingCol, island_info& ii) {
+    stack<pair<int, int>> *s = new stack<pair<int, int>>;
+    s->push(make_pair(startingRow, startingCol));
+
+    int minRow = startingRow, maxRow = startingRow, minCol = startingCol, maxCol = startingCol;
+
+    while (!s->empty()) {
+        int row = s->top().first;
+        int col = s->top().second;
+        minRow = min(minRow, row);
+        maxRow = max(maxRow, row);
+        minCol = min(minCol, col);
+        maxCol = max(maxCol, col);
+        ii.size++;
+        visited[row][col] = true;
+        s->pop();
+
+        if (row - 1 >= 0 && islands[row - 1][col] == '+' && !visited[row - 1][col]) {
+            s->push(make_pair(row - 1, col));
+        }
+        if (row + 1 < ISLANDS_M  && islands[row + 1][col] == '+' && !visited[row + 1][col]) {
+            s->push(make_pair(row + 1, col));
+        }
+        if (col - 1 >= 0 && islands[row][col - 1] == '+' && !visited[row][col - 1]) {
+            s->push(make_pair(row, col - 1));
+        }
+        if (col + 1 < ISLANDS_N  && islands[row][col + 1] == '+' && !visited[row][col + 1]) {
+            s->push(make_pair(row, col + 1));
+        }
+    }
+
+    ii.row = maxRow - minRow + 1;
+    ii.col = maxCol - minCol + 1;
+    ii.charSequence += (to_string(ii.row) + "," + to_string(ii.col) + ":");
+    for (int i = minRow; i <= maxRow; ++i) {
+        for (int j = minCol; j <= maxCol; ++j) {
+            ii.charSequence.push_back(islands[i][j]);
+        }
+    }
 }
 
 #endif //LINTCODE_ALGORITHMS_H

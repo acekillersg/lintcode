@@ -9,7 +9,7 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    int problemID = 6;
+    int problemID = 1;
     switch (problemID) {
         case 0: {
             Solution_0_List<int> *solution0 = new Solution_0_List<int>();
@@ -52,6 +52,22 @@ int main(int argc, char** argv) {
             solution1->insert(19, solution1->root);
             solution1->insert(12, solution1->root);
 
+            cout << "visit in pre-order:";
+            solution1->preOrder(solution1->root);
+            cout << endl << "visit in in-order:";
+            solution1->inOrder(solution1->root);
+            cout << endl << "visit in post-order:";
+            solution1->postOrder(solution1->root);
+
+            cout << endl << "Reversing the left and right children trees!" << endl;
+            solution1->reverseTree();
+            cout << "visit in pre-order:";
+            solution1->preOrder(solution1->root);
+            cout << endl << "visit in in-order:";
+            solution1->inOrder(solution1->root);
+            cout << endl << "visit in post-order:";
+            solution1->postOrder(solution1->root);
+
             Solution_1_Tree<int> *solution2 = new Solution_1_Tree<int>();
             solution2->insert(2, solution2->root);
             solution2->insert(1, solution2->root);
@@ -72,7 +88,7 @@ int main(int argc, char** argv) {
             solution2->insert(19, solution2->root);
             solution2->insert(12, solution2->root);
 
-            cout << "visit in pre-order:";
+            cout << endl << "visit in pre-order:";
             solution1->preOrder(solution1->root);
 
             cout << endl << "visit in in-order:";
@@ -338,20 +354,36 @@ int main(int argc, char** argv) {
             break;
         }
         case 6: {
+            // String matching problem (KMP algorithm)
 //            string sentence = "ABCABCDABDCABCDABDAB";
 //            string pattern = "ABCDABD";
 //            cout << "Position: " << KMP(sentence, pattern);
 
-            int number1[] = {1, -2, 3, 10, -4, 7, 2, -5};
-            int number2[] = {-6, 2, 4, -7, 5, 3, 2, -1, 6, -9, 10, -2};
-            int number3[] = {-2, 11, 8, -4, -1, 16, 5, 0};
-            maxSumInArray(number1, sizeof(number1) / sizeof(int));
-            maxSumInArray(number2, sizeof(number2) / sizeof(int));
-            maxSumInArray(number3, sizeof(number3) / sizeof(int));
+            // Find the sub-array in an array that has the maximum sum
+//            int number1[] = {1, -2, 3, 10, -4, 7, 2, -5};
+//            int number2[] = {-6, 2, 4, -7, 5, 3, 2, -1, 6, -9, 10, -2};
+//            int number3[] = {-2, 11, 8, -4, -1, 16, 5, 0};
+//            maxSumInArray(number1, sizeof(number1) / sizeof(int));
+//            maxSumInArray(number2, sizeof(number2) / sizeof(int));
+//            maxSumInArray(number3, sizeof(number3) / sizeof(int));
 
+            // Eight queen problem
 //            eight_queen(8);
 
+            // Hanoi checkerboard placement problem
 //            hanoi(20);
+
+            // Parentheses matching problem
+//            cout << "Stack implementation:" << endl;
+//            parentheses_match("(abc((adfd(dfd)dfdfd)fdfd)fdfd)");
+//            parentheses_match("())(");
+//
+//            cout << "Recursive implementation:" << endl;
+//            parentheses_match_rec("(abc((adfd(dfd)dfdfd)fdfd)fdfd)");
+//            parentheses_match_rec("())(()");
+
+            // Counting of islands with different shapes
+            island_search();
             break;
         }
         default: {

@@ -58,6 +58,7 @@ public:
     }
     ~Solution_1_Tree(){}
 
+    void reverseTree();
     void insert(T key);
     void insert(T key, TreeNode<T>*& root);
     void del(T key, TreeNode<T>*& root);
@@ -82,6 +83,7 @@ public:
     void regenerate(TreeNode<T>*& root);
 
 private:
+    void reverseTree_impl(TreeNode<T>*& root);
     void generate_pre_order_impl(TreeNode<T>*& root, string str, int& idx);
     void regenerate_impl(TreeNode<T>*& root, string in, string post);
 };
@@ -220,6 +222,25 @@ bool Solution_0_List<T>::hasCircle(ListNode<T> *head) {
 }
 
 // Solution_1
+template <typename T>
+void Solution_1_Tree<T>::reverseTree() {
+    if (this->root == nullptr) {
+        cout << "Empty tree!" << endl;
+    } else {
+        reverseTree_impl(this->root);
+    }
+}
+
+template <typename T>
+void Solution_1_Tree<T>::reverseTree_impl(TreeNode<T> *&root) {
+    if (root == nullptr) return;
+    reverseTree_impl(root->left);
+    reverseTree_impl(root->right);
+    TreeNode<T>* tempPtr = root->left;
+    root->left = root->right;
+    root->right = tempPtr;
+}
+
 template <typename T>
 void Solution_1_Tree<T>::insert(T key, TreeNode<T>*& root) {
     if(this->root == nullptr) {
